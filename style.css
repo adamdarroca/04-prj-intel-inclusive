@@ -12,6 +12,7 @@
   --color-white: #ffffff;
   --color-light-blue: #e8f1f9;
   --color-intel-blue: #0071c5;
+  --color-intel-blue-dark: #005aa3;
   --color-black: #000000;
   --color-dark-grey: #4d4d4d;
   --color-light-grey: #f5f5f5;
@@ -66,6 +67,10 @@ body {
   transition: background-color var(--transition-smooth);
 }
 
+body.rtl {
+  text-align: right;
+}
+
 /* ==========================================
    HEADER / HERO SECTION
    ========================================== */
@@ -113,13 +118,37 @@ header p {
   opacity: 0.9;
 }
 
+/* Language switcher styling */
+.language-switcher {
+  margin-top: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  text-align: left;
+}
+
+body.rtl .language-switcher {
+  text-align: right;
+}
+
+.language-switcher label {
+  font-weight: 600;
+  color: var(--color-intel-blue-dark);
+}
+
+.language-switcher p {
+  font-size: 0.85rem;
+  color: var(--color-dark-grey);
+}
+
 /* ==========================================
    TIMELINE SECTION (Mobile View)
    ========================================== */
 
-section {
+body > section:first-of-type {
   padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-2xl);
   background-color: var(--color-white);
+  direction: ltr;
   
   /* Mobile: Vertical stacking */
   display: flex;
@@ -133,12 +162,17 @@ section {
   scroll-behavior: smooth;
 }
 
+[dir="rtl"] body > section:first-of-type > div {
+  direction: rtl;
+  text-align: right;
+}
+
 /* Hide scrollbar for mobile but keep functionality */
-section::-webkit-scrollbar {
+body > section:first-of-type::-webkit-scrollbar {
   display: none;
 }
 
-section {
+body > section:first-of-type {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -147,7 +181,7 @@ section {
    MILESTONE CARDS (Mobile View)
    ========================================== */
 
-section > div {
+body > section:first-of-type > div {
   /* Mobile: Full width vertical cards */
   width: 100%;
   flex-shrink: 0;
@@ -164,7 +198,7 @@ section > div {
   overflow: hidden;
 }
 
-section > div::before {
+body > section:first-of-type > div::before {
   content: '';
   position: absolute;
   top: 0;
@@ -178,7 +212,7 @@ section > div::before {
 }
 
 /* Blurred background layer on hover (keeps text sharp) */
-section > div::after {
+body > section:first-of-type > div::after {
   content: '';
   position: absolute;
   top: 0;
@@ -197,13 +231,13 @@ section > div::after {
 }
 
 /* Keep all text above the blur layer */
-section > div > * {
+body > section:first-of-type > div > * {
   position: relative;
   z-index: 1;
 }
 
 /* Card Heading Group (year + title) */
-section > div .card-heading {
+body > section:first-of-type > div .card-heading {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -211,7 +245,7 @@ section > div .card-heading {
 }
 
 /* Card Year Badge */
-section > div h2 {
+body > section:first-of-type > div h2 {
   font-size: 1rem;
   font-weight: 700;
   color: var(--color-intel-blue);
@@ -222,8 +256,18 @@ section > div h2 {
   margin-left: 3rem;
 }
 
+/* RTL adjustments for timeline headings */
+[dir="rtl"] body > section:first-of-type > div .card-heading {
+  align-items: flex-end;
+}
+
+[dir="rtl"] body > section:first-of-type > div h2 {
+  margin-left: 0;
+  margin-right: 3rem;
+}
+
 /* Card Title - Hidden by default, visible on hover */
-section > div h3 {
+body > section:first-of-type > div h3 {
   font-size: 1rem;
   font-weight: 600;
   color: var(--color-intel-blue);
@@ -239,7 +283,7 @@ section > div h3 {
 }
 
 /* Card Description - Hidden by default, visible on hover */
-section > div p {
+body > section:first-of-type > div p {
   font-size: 0.95rem;
   color: var(--color-dark-grey);
   line-height: 1.8;
@@ -250,13 +294,13 @@ section > div p {
 }
 
 /* Keep all cards the same height on mobile */
-section > div {
+body > section:first-of-type > div {
   min-height: 260px;
 }
 
 /* Mobile: make later cards match the early card height */
 @media (max-width: 767px) {
-  section > div:nth-child(n+5) {
+  body > section:first-of-type > div:nth-child(n+5) {
     height: 260px;
   }
 }
@@ -266,33 +310,186 @@ section > div {
    CARD HOVER EFFECTS
    ========================================== */
 
-section > div:hover {
+body > section:first-of-type > div:hover {
   border-color: var(--color-white);
   box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
   background-color: transparent;
 }
 
-section > div:hover::before {
+body > section:first-of-type > div:hover::before {
   opacity: 1;
 }
 
-section > div:hover::after {
+body > section:first-of-type > div:hover::after {
   opacity: 1;
 }
 
-section > div:hover h2 {
+body > section:first-of-type > div:hover h2 {
   color: var(--color-intel-blue);
   text-shadow: 0 2px 4px rgba(0, 113, 197, 0.2);
 }
 
-section > div:hover h3 {
+body > section:first-of-type > div:hover h3 {
   color: var(--color-intel-blue);
 }
 
-section > div:hover p {
+body > section:first-of-type > div:hover p {
   opacity: 1;
   visibility: visible;
+}
+
+/* Timeline helper text */
+body > p {
+  text-align: center;
+  padding: 0 var(--spacing-sm) var(--spacing-lg);
+  color: var(--color-dark-grey);
+}
+
+body.rtl > p {
+  text-align: center;
+}
+
+/* ==========================================
+   NEW SECTIONS (Bootstrap Grid + Forms)
+   ========================================== */
+
+.impact-section {
+  background-color: var(--color-light-blue);
+  padding: var(--spacing-xl) var(--spacing-sm);
+}
+
+.impact-section .row {
+  flex-direction: row;
+  direction: ltr;
+}
+
+[dir="rtl"] .impact-section .row {
+  flex-direction: row;
+  direction: ltr;
+}
+
+[dir="rtl"] .impact-heading {
+  align-items: flex-end;
+}
+
+[dir="rtl"] .impact-card {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .subscription-section {
+  direction: rtl;
+}
+
+.impact-heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+  margin-bottom: var(--spacing-lg);
+}
+
+.impact-heading h2 {
+  color: var(--color-intel-blue-dark);
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.impact-heading p {
+  color: var(--color-dark-grey);
+  margin: 0;
+}
+
+.impact-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid #d9e3f0;
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  height: 100%;
+}
+
+.impact-icon {
+  font-size: 1.75rem;
+  color: var(--color-intel-blue-dark);
+}
+
+.impact-card h3 {
+  font-size: 1.2rem;
+  color: var(--color-intel-blue-dark);
+}
+
+.impact-card p {
+  color: var(--color-dark-grey);
+  margin-bottom: var(--spacing-sm);
+}
+
+.learn-more {
+  border-color: var(--color-intel-blue-dark);
+  color: var(--color-intel-blue-dark);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.learn-more:hover {
+  background-color: var(--color-intel-blue-dark);
+  color: var(--color-white);
+}
+
+.subscription-section {
+  padding: var(--spacing-xl) var(--spacing-sm);
+  background-color: var(--color-white);
+}
+
+.subscription-card {
+  background-color: var(--color-light-grey);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.subscription-card h2 {
+  color: var(--color-intel-blue-dark);
+  margin-bottom: var(--spacing-xs);
+}
+
+.subscription-card p {
+  color: var(--color-dark-grey);
+  margin-bottom: var(--spacing-md);
+}
+
+.subscription-card .btn-primary {
+  background-color: var(--color-intel-blue-dark);
+  border-color: var(--color-intel-blue-dark);
+}
+
+.subscription-card .btn-primary:hover {
+  background-color: #004a87;
+  border-color: #004a87;
+}
+
+.site-footer {
+  background-color: var(--color-intel-blue-dark);
+  color: var(--color-white);
+  text-align: center;
+  padding: var(--spacing-md) var(--spacing-sm);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .impact-heading {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 /* ==========================================
@@ -301,7 +498,7 @@ section > div:hover p {
    ========================================== */
 
 /* Card 1: 1968 - 1960s processor */
-section > div:nth-child(1) {
+body > section:first-of-type > div:nth-child(1) {
   background-image:
     linear-gradient(var(--color-white), var(--color-white)),
     url('img/1960s.png');
@@ -311,7 +508,7 @@ section > div:nth-child(1) {
 }
 
 /* Card 2: 1971 - First Microprocessor */
-section > div:nth-child(2) {
+body > section:first-of-type > div:nth-child(2) {
   background-image:
     linear-gradient(var(--color-white), var(--color-white)),
     url('img/1971.png');
@@ -321,7 +518,7 @@ section > div:nth-child(2) {
 }
 
 /* Card 3: 1978 - 8086 Processor */
-section > div:nth-child(3) {
+body > section:first-of-type > div:nth-child(3) {
   background-image:
     linear-gradient(var(--color-white), var(--color-white)),
     url('img/1978.png');
@@ -331,7 +528,7 @@ section > div:nth-child(3) {
 }
 
 /* Card 4: 1985 - 386 Processor */
-section > div:nth-child(4) {
+body > section:first-of-type > div:nth-child(4) {
   background-image:
     linear-gradient(var(--color-white), var(--color-white)),
     url('img/1985.png');
@@ -341,7 +538,7 @@ section > div:nth-child(4) {
 }
 
 /* Card 5: 2006 - Peak GHG Emissions */
-section > div:nth-child(5) {
+body > section:first-of-type > div:nth-child(5) {
   background-image:
     linear-gradient(var(--color-white), var(--color-white)),
     url('img/2006.png');
@@ -351,7 +548,7 @@ section > div:nth-child(5) {
 }
 
 /* Card 6: 2020 - RISE Strategy */
-section > div:nth-child(6) {
+body > section:first-of-type > div:nth-child(6) {
   background-image:
     linear-gradient(var(--color-white), var(--color-white)),
     url('img/2020.png');
@@ -361,7 +558,7 @@ section > div:nth-child(6) {
 }
 
 /* Card 7: 2022 - Net-Zero By 2040 */
-section > div:nth-child(7) {
+body > section:first-of-type > div:nth-child(7) {
   background-image:
     linear-gradient(var(--color-white), var(--color-white)),
     url('img/2022.png');
@@ -371,7 +568,7 @@ section > div:nth-child(7) {
 }
 
 /* Card 8: 2023 - Renewable Electricity */
-section > div:nth-child(8) {
+body > section:first-of-type > div:nth-child(8) {
   background-image:
     linear-gradient(var(--color-white), var(--color-white)),
     url('img/2023.png');
@@ -381,7 +578,7 @@ section > div:nth-child(8) {
 }
 
 /* Card 9: 2024 - Sustainability Summit */
-section > div:nth-child(9) {
+body > section:first-of-type > div:nth-child(9) {
   background-image:
     linear-gradient(var(--color-white), var(--color-white)),
     url('img/2024.png');
@@ -392,7 +589,7 @@ section > div:nth-child(9) {
 
 /* Phone-size tweak: make the PNG layer shorter so it looks clearer */
 @media (max-width: 480px) {
-  section > div {
+  body > section:first-of-type > div {
     /* First value = top white band, second value = PNG area */
     background-size: 100% 38%, 83.333% 52%;
   }
@@ -404,14 +601,14 @@ section > div:nth-child(9) {
    ========================================== */
 
 @media (min-width: 313px) {
-  section > div .card-heading {
+  body > section:first-of-type > div .card-heading {
     /* Place h2 (year) and h3 (title) on one line */
     flex-direction: row;
     align-items: baseline;
     gap: var(--spacing-sm);
   }
   
-  section > div h3 {
+  body > section:first-of-type > div h3 {
     margin-bottom: 0;
   }
 }
@@ -422,7 +619,7 @@ section > div:nth-child(9) {
    ========================================== */
 
 @media (min-width: 580px) and (max-width: 767px) {
-  section > div {
+  body > section:first-of-type > div {
     min-height: 340px;
   }
 }
@@ -433,12 +630,12 @@ section > div:nth-child(9) {
    ========================================== */
 
 @media (max-width: 230px) {
-  section > div .card-heading {
+  body > section:first-of-type > div .card-heading {
     /* Keep the year at the top, center the heading block */
     align-items: center;
   }
 
-  section > div h3 {
+  body > section:first-of-type > div h3 {
     /* Center the title and push it down onto the PNG area */
     text-align: center;
     width: 100%;
@@ -452,7 +649,7 @@ section > div:nth-child(9) {
    ========================================== */
 
 @media (max-width: 375px) {
-  section > div h2 {
+  body > section:first-of-type > div h2 {
     font-size: 1.2rem;
     margin-left: 2.5rem;
   }
@@ -464,11 +661,11 @@ section > div:nth-child(9) {
    ========================================== */
 
 @media (min-width: 380px) {
-  section > div h2 {
+  body > section:first-of-type > div h2 {
     font-size: 2.2rem;
   }
   
-  section > div h3 {
+  body > section:first-of-type > div h3 {
     font-size: 1.35rem;
   }
 }
@@ -479,10 +676,10 @@ section > div:nth-child(9) {
    ========================================== */
 
 @media (min-width: 390px) {
-  section > div h2 {
+  body > section:first-of-type > div h2 {
     margin-left: 0.5rem;
   }
-  section > div h3 {
+  body > section:first-of-type > div h3 {
     font-size: 1.2rem;
     white-space: nowrap;
     margin-left: 0.5rem;
@@ -524,7 +721,7 @@ body > p {
     margin: var(--spacing-md) auto 0;
   }
   
-  section {
+  body > section:first-of-type {
     /* Horizontal scrolling layout */
     flex-direction: row;
     padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-2xl);
@@ -535,7 +732,7 @@ body > p {
     scroll-snap-type: x mandatory;
   }
   
-  section > div {
+  body > section:first-of-type > div {
     /* Horizontal scroll items */
     width: 380px;
     min-width: 380px;
@@ -555,17 +752,17 @@ body > p {
     position: relative;
   }
   
-  section > div h2 {
+  body > section:first-of-type > div h2 {
     /* Slightly smaller so h2+h3 fit on one line */
     font-size: 2.1rem;
   }
   
-  section > div h3 {
+  body > section:first-of-type > div h3 {
     font-size: 1.2rem;
     white-space: nowrap;
   }
   
-  section > div p {
+  body > section:first-of-type > div p {
     font-size: 0.95rem;
   }
 }
@@ -598,7 +795,7 @@ body > p {
     color: rgba(255, 255, 255, 0.95);
   }
   
-  section {
+  body > section:first-of-type {
     background: linear-gradient(180deg, transparent 0%, transparent 50%, var(--color-white) 50%, var(--color-white) 100%);
     padding: var(--spacing-2xl) var(--spacing-2xl) var(--spacing-2xl);
     gap: var(--spacing-lg);
@@ -608,7 +805,7 @@ body > p {
     min-height: 500px;
   }
   
-  section > div {
+  body > section:first-of-type > div {
     width: 380px;
     min-width: 380px;
     height: 320px;
@@ -622,43 +819,43 @@ body > p {
   }
 
   /* Move PNG images up slightly on desktop */
-  section > div {
+  body > section:first-of-type > div {
     background-position: top, center calc(100% - 16px);
   }
 
-  section > div .card-heading {
+  body > section:first-of-type > div .card-heading {
     gap: var(--spacing-sm);
   }
   
-  section > div:hover {
+  body > section:first-of-type > div:hover {
     border-color: var(--color-white);
     box-shadow: 0 16px 32px rgba(0, 113, 197, 0.2);
     transform: translateY(-8px) scale(1.02);
     background-color: transparent;
   }
   
-  section > div h2 {
+  body > section:first-of-type > div h2 {
     color: var(--color-intel-blue);
     /* Move the year left without changing h3 */
     margin-left: 1rem;
   }
   
-  section > div h3 {
+  body > section:first-of-type > div h3 {
     color: var(--color-black);
     transition: color var(--transition-smooth);
   }
   
-  section > div:hover h3 {
+  body > section:first-of-type > div:hover h3 {
     color: var(--color-intel-blue);
   }
   
-  section > div p {
+  body > section:first-of-type > div p {
     opacity: 0;
     visibility: hidden;
     transition: opacity var(--transition-smooth), visibility var(--transition-smooth);
   }
   
-  section > div:hover p {
+  body > section:first-of-type > div:hover p {
     opacity: 1;
     visibility: visible;
   }
@@ -674,12 +871,12 @@ body > p {
     font-size: 3rem;
   }
   
-  section > div {
+  body > section:first-of-type > div {
     width: 460px;
     min-width: 460px;
   }
   
-  section {
+  body > section:first-of-type {
     gap: var(--spacing-2xl);
   }
 }
@@ -711,18 +908,18 @@ body > p {
     background-color: var(--color-black);
   }
   
-  section > div {
+  body > section:first-of-type > div {
     background-color: var(--color-dark-grey);
     color: var(--color-white);
   }
   
-  section > div p {
+  body > section:first-of-type > div p {
     color: rgba(255, 255, 255, 0.85);
   }
 }
 
 @media (prefers-color-scheme: dark) and (max-width: 480px) {
-  section > div {
+  body > section:first-of-type > div {
     /* Mobile + dark mode: keep the PNG background white */
     background-color: var(--color-white);
   }
@@ -730,9 +927,9 @@ body > p {
 
 @media (max-width: 767px) {
   /* Show the paragraph when a card is tapped or focused */
-  section > div:active p,
-  section > div:focus p,
-  section > div:focus-within p {
+  body > section:first-of-type > div:active p,
+  body > section:first-of-type > div:focus p,
+  body > section:first-of-type > div:focus-within p {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -740,13 +937,13 @@ body > p {
   }
   
   /* Make cards focusable with visual feedback */
-  section > div:focus {
+  body > section:first-of-type > div:focus {
     outline: 2px solid var(--color-intel-blue);
     outline-offset: 2px;
   }
   
   /* Keep paragraph visible while focused */
-  section > div:focus {
+  body > section:first-of-type > div:focus {
     cursor: pointer;
   }
 }
